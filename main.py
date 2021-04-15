@@ -10,7 +10,7 @@ templates = Jinja2Templates(directory="templates")
 # home page
 @app.get("/")
 def index(request: Request):
-    stock_filter = request.query_params.get('filter', False) # filter of stocks, non necessary
+    stock_filter = request.query_params.get('filter', False) # to filter stocks, altough not necessary
 
     # sql init
     connection = sqlite3.connect(config.DB_FILE)
@@ -73,7 +73,7 @@ def stock_detail(request: Request, symbol):
     # we return the stock name/symbol + historical day prices + different available strategies
     return templates.TemplateResponse("stock_detail.html",{"request":request, "stock":row, "bars": bars, "strategies": strategies})
 
-# what happens when we submit apply strategy
+# When we submit apply strategy
 @app.post("/apply_strategy")
 def apply_strategy(strategy_id: int = Form(...), stock_id: int = Form(...)):
     connection = sqlite3.connect( config.DB_FILE )
@@ -88,7 +88,7 @@ def apply_strategy(strategy_id: int = Form(...), stock_id: int = Form(...)):
     
     return RedirectResponse( url=f"/strategy/{strategy_id}", status_code=303)
 
-# page with stocks that the strategy_id is applied to
+# List of stocks that the strategy_id is applied to
 @app.get("/strategy/{strategy_id}")
 def strategy(request: Request, strategy_id: int):
     connection = sqlite3.connect(config.DB_FILE)

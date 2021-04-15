@@ -5,7 +5,7 @@ import datetime as date
 from datetime import date
 import json
 
-#add notification by mail when something is bought
+# TODO: add notification by mail when something is bought
 
 #SQL initialisation
 connection = sqlite3.connect( config.DB_FILE )
@@ -54,7 +54,7 @@ for symbol in symbols:
         opening_range_high=max(opening_range_high,bar.h)
     opening_range = opening_range_high - opening_range_low
 
-    # Since the free Alpaca tier is sometimes incomplete, we disregard the stocks that dont have enough data (no data between 9:30 and 45)
+    # Since the free Alpaca tier is sometimes incomplete, we disregard the stocks that dont have enough data (no data between 9:30 and 45 for example)
     if opening_range==-float("inf"): 
         print(f'not enough data on {symbol}.')
         symbols.remove(symbol)
